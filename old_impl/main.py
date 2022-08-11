@@ -57,10 +57,7 @@ max_tokens = int(max_tokens)
 def reverse_tokens(tokens):
     text = ''
     for i in tokens:
-        if i != 0:
-            text = text + cn_word_vecs.index2word[i]
-        else:
-            text = text + ' '
+        text = text + cn_word_vecs.index2word[i] if i != 0 else f'{text} '
     return text
 
 

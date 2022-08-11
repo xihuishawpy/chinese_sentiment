@@ -12,8 +12,7 @@ def predict(pred_fn, line):
     sentence = ' '.join(jieba.cut(line.strip(), cut_all=False, HMM=True))
     words = [w.encode() for w in sentence.strip().split()]
     nwords = len(words)
-    predictions = pred_fn({'words': [words], 'nwords': [nwords]})
-    return predictions
+    return pred_fn({'words': [words], 'nwords': [nwords]})
 
 
 if __name__ == '__main__':
