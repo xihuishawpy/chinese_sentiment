@@ -5,7 +5,7 @@ MIN_COUNT = 1
 
 if __name__ == '__main__':
     def words(name):
-        return '{}.words.txt'.format(name)
+        return f'{name}.words.txt'
 
 
     print('Build vocab words')
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
 
     def labels(name):
-        return '{}.labels.txt'.format(name)
+        return f'{name}.labels.txt'
 
 
     print('Build labels')

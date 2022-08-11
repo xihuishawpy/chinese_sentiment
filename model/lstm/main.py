@@ -140,11 +140,11 @@ if __name__ == '__main__':
 
 
     def fwords(name):
-        return str(Path(DATA_DIR, '{}.words.txt'.format(name)))
+        return str(Path(DATA_DIR, f'{name}.words.txt'))
 
 
     def ftags(name):
-        return str(Path(DATA_DIR, '{}.labels.txt'.format(name)))
+        return str(Path(DATA_DIR, f'{name}.labels.txt'))
 
 
     train_inpf = functools.partial(input_fn, fwords('train'), ftags('train'),
@@ -161,7 +161,7 @@ if __name__ == '__main__':
     # Write predictions to file
     def write_predictions(name):
         Path('results/score').mkdir(parents=True, exist_ok=True)
-        with Path('results/score/{}.preds.txt'.format(name)).open('wb', encoding='utf-8') as f:
+        with Path(f'results/score/{name}.preds.txt').open('wb', encoding='utf-8') as f:
             test_inpf = functools.partial(input_fn, fwords(name), ftags(name))
             golds_gen = generator_fn(fwords(name), ftags(name))
             preds_gen = estimator.predict(test_inpf)

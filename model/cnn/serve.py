@@ -17,8 +17,7 @@ def predict(pred_fn, line, length=300):
         words = words[:length]
     else:
         words.extend(['<pad>'] * (length - len(words)))
-    predictions = pred_fn({'words': [words]})
-    return predictions
+    return pred_fn({'words': [words]})
 
 
 if __name__ == '__main__':

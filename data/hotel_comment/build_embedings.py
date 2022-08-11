@@ -16,7 +16,7 @@ if __name__ == '__main__':
     with Path('../../sgns.zhihu.bigram').open(encoding='utf-8') as f:
         for line_idx, line in enumerate(f):
             if line_idx % 100000 == 0:
-                print('- At line {}'.format(line_idx))
+                print(f'- At line {line_idx}')
             line = line.strip().split()
             if len(line) != 300 + 1:
                 continue
@@ -27,7 +27,7 @@ if __name__ == '__main__':
                 found += 1
                 word_idx = word_to_idx[word]
                 embeddings[word_idx] = embedding
-    print('- done. Found {} vectors for {} words'.format(found, size_vocab))
+    print(f'- done. Found {found} vectors for {size_vocab} words')
 
     # 保存 np.array
     np.savez_compressed('w2v.npz', embeddings=embeddings)

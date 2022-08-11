@@ -76,10 +76,21 @@ def model_fn(features, labels, mode, params):
     # CNN
     pooled_outputs = []
     for i, filter_size in enumerate(params['filter_sizes']):
-        conv2 = tf.layers.conv2d(embeddings_expanded, params['num_filters'], kernel_size=[filter_size, params['dim']],
-                                 activation=tf.nn.relu, name='conv-{}'.format(i))
-        pooled = tf.layers.max_pooling2d(inputs=conv2, pool_size=[params['nwords'] - filter_size + 1, 1],
-                                         strides=[1, 1], name='pool-{}'.format(i))
+        conv2 = tf.layers.conv2d(
+            embeddings_expanded,
+            params['num_filters'],
+            kernel_size=[filter_size, params['dim']],
+            activation=tf.nn.relu,
+            name=f'conv-{i}',
+        )
+
+        pooled = tf.layers.max_pooling2d(
+            inputs=conv2,
+            pool_size=[params['nwords'] - filter_size + 1, 1],
+            strides=[1, 1],
+            name=f'pool-{i}',
+        )
+
         pooled_outputs.append(pooled)
     num_total_filters = params['num_filters'] * len(params['filter_sizes'])
     h_poll = tf.concat(pooled_outputs, 3)
@@ -144,11 +155,11 @@ if __name__ == '__main__':
 
 
     def fwords(name):
-        return str(Path(DATA_DIR, '{}.words.txt'.format(name)))
+        return str(Path(DATA_DIR, f'{name}.words.txt'))
 
 
     def ftags(name):
-        return str(Path(DATA_DIR, '{}.labels.txt'.format(name)))
+        return str(Path(DATA_DIR, f'{name}.labels.txt'))
 
 
     train_inpf = functools.partial(input_fn, fwords('train'), ftags('train'),
@@ -165,7 +176,7 @@ if __name__ == '__main__':
     # Write predictions to file
     def write_predictions(name):
         Path('results/score').mkdir(parents=True, exist_ok=True)
-        with Path('results/score/{}.preds.txt'.format(name)).open('wb') as f:
+        with Path(f'results/score/{name}.preds.txt').open('wb') as f:
             test_inpf = functools.partial(input_fn, fwords(name), ftags(name))
             golds_gen = generator_fn(fwords(name), ftags(name))
             preds_gen = estimator.predict(test_inpf)
